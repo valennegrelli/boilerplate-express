@@ -7,7 +7,13 @@ function server(req, res) {
   res.sendFile(absolutePath);
 }
 
+function serveJSON(req, res) {
+  res.json({message: "Hello json"});
+}
+
 app.get("/", server); //Serves HTML page
+
+app.get("/json", serveJSON); //Serves JSON data
 
 const cssStyle = __dirname + "/public";
 app.use("/public", express.static(cssStyle));
