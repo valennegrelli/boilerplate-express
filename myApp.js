@@ -17,11 +17,18 @@ function serveJSON(req, res) {
   }
 }
 
+function requestLogger(req, res, next) {
+  console.log(req.method + " " + req.path + " - " + req.ip);
+  next();
+}
+
 app.get("/", server); //Serves HTML page
 
 app.get("/json", serveJSON); //Serves JSON data
 
 const cssStyle = __dirname + "/public";
-app.use("/public", express.static(cssStyle));
+app.use("/public", express.static(cssStyle)); //Mware that calls css style for html
+
+app.use(requestLogger);
 
 module.exports = app;
