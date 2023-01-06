@@ -1,8 +1,8 @@
 require("dotenv").config();
-
+let bodyParser = require("body-parser");
 let express = require("express");
+
 let app = express();
-console.log("Hello World");
 
 function server(req, res) {
   const absolutePath = __dirname + "/views/index.html";
@@ -42,7 +42,7 @@ function nameHandler(req, res) {
 }
 
 function saveNameHandler(req, res) {
-  req = req;
+  res.json({name: req.body.first + " " + req.body.last});
 }
 app.get("/", server); //Serves HTML page
 
@@ -56,6 +56,9 @@ app.use(requestLogger);
 app.get("/now", addDateToReq, dateHandler);
 
 app.get("/:word/echo", echoHandler);
+
+const urlEncodedDataMware = bodyParser.urlencoded({extended: false});
+app.use(urlEncodedDataMware);
 
 app.route("/name").get(nameHandler).post(saveNameHandler);
 
