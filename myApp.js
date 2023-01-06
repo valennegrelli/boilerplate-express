@@ -37,6 +37,13 @@ function echoHandler(req, res) {
   res.json({echo: req.params.word});
 }
 
+function nameHandler(req, res) {
+  res.json({name: req.query.first + " " + req.query.last});
+}
+
+function saveNameHandler(req, res) {
+  req = req;
+}
 app.get("/", server); //Serves HTML page
 
 app.get("/json", serveJSON); //Serves JSON data
@@ -49,5 +56,7 @@ app.use(requestLogger);
 app.get("/now", addDateToReq, dateHandler);
 
 app.get("/:word/echo", echoHandler);
+
+app.route("/name").get(nameHandler).post(saveNameHandler);
 
 module.exports = app;
