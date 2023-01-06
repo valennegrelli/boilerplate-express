@@ -33,6 +33,10 @@ function dateHandler(req, res) {
   res.json({time: req.time});
 }
 
+function echoHandler(req, res) {
+  res.json({echo: req.params.word});
+}
+
 app.get("/", server); //Serves HTML page
 
 app.get("/json", serveJSON); //Serves JSON data
@@ -43,5 +47,7 @@ app.use("/public", express.static(cssStyle)); //Mware that calls css style for h
 app.use(requestLogger);
 
 app.get("/now", addDateToReq, dateHandler);
+
+app.get("/:word/echo", echoHandler);
 
 module.exports = app;
